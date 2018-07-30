@@ -12,6 +12,18 @@ const todoReducer = (state = initialState, action) => {
       const { text } = action.payload
       return state.set('todo', state.todo.concat(text))
     }
+    case types.FINISH_TODO: {
+      const { index } = action.payload
+      const item = state.todo[index]
+      return state
+        .set('todo', state.todo.filter((_, i) => index !== i))
+        .set('done', state.done.concat(item))
+    }
+    case types.REMOVE_TODO: {
+      const { index } = action.payload
+      return state
+        .set('done', state.todo.filter((_, i) => index !== i))
+    }
     default:
       return state
   }

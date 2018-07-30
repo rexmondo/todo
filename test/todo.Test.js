@@ -35,7 +35,26 @@ describe('todo list', function() {
     const todo = 'eat lunch'
     const todoAction = todoActions.addTodo(todo)
     this.store.dispatch(todoAction)
-    assert.deepEqual(this.store.getState().todo, [todo])
+    const index = this.store.getState().todo.findIndex(item => item === todo)
+    assert.equal(index, 0)
+    const finishAction = todoActions.finishTodo(index)
+    this.store.dispatch(finishAction)
+
+    assert.deepEqual(this.store.getState().todo, [])
+    assert.deepEqual(this.store.getState().done, [todo])
   })
-  it('deletes todos')
+  it('deletes todos', function() {
+    const todo = 'eat lunch'
+    const todoAction = todoActions.addTodo(todo)
+    this.store.dispatch(todoAction)
+    const index = this.store.getState().todo.findIndex(item => item === todo)
+    const finishAction = todoActions.finishTodo(index)
+    this.store.dispatch(finishAction)
+    const doneIndex = this.store.getState().done.findIndex(item => item === todo)
+
+    const removeAction = todoActions.removeTodo(doneIndex)
+    this.store.dispatch(removeAction)
+    assert.deepEqual(this.store.getState().todo, [])
+    assert.deepEqual(this.store.getState().done, [])
+  })
 })

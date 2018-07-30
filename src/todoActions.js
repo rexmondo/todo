@@ -7,6 +7,22 @@ const addTodo = text => ({
   }
 })
 
+const finishTodo = index => ({
+  type: types.FINISH_TODO,
+  payload: {
+    index
+  }
+})
+
+const removeTodo = index => ({
+  type: types.REMOVE_TODO,
+  payload: {
+    index
+  }
+})
+
 module.exports = {
-  addTodo
+  addTodo,
+  finishTodo,
+  removeTodo
 }
